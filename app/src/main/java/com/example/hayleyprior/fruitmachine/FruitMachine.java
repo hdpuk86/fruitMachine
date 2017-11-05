@@ -35,10 +35,6 @@ public class FruitMachine {
         return allSymbols;
     }
 
-    public ArrayList<Symbol> getLine() {
-        return line;
-    }
-
     public void addPlayerFunds(int amount) {
         this.playerFunds += amount;
     }
@@ -97,13 +93,18 @@ public class FruitMachine {
     }
 
     public int spin() {
-        this.addPlayerFunds(-1);
-        addMoneyToBank(1);
-        this.line = getNewLine();
-        getEmojis();
-        if (isIdentical(this.line)) {
-            ui.youWon("£" + this.line.get(0).getValue());
-            return this.line.get(0).getValue();
+        if (this.playerFunds < 1) {
+            System.out.println("Sorry, out of money! Try Again!hy");
+            this.quit = true;
+        } else {
+            this.addPlayerFunds(-1);
+            addMoneyToBank(1);
+            this.line = getNewLine();
+            getEmojis();
+            if (isIdentical(this.line)) {
+                ui.youWon("£" + this.line.get(0).getValue());
+                return this.line.get(0).getValue();
+            }
         }
         return 0;
     }
@@ -131,7 +132,7 @@ public class FruitMachine {
                 this.quit = true;
                 return;
             }
-            System.out.println("Your funds: " + playerFunds + "\n");
+            System.out.println("Your funds: " + getPlayerFunds() + "\n");
             int winnings = spin();
             addPlayerFunds(winnings);
         }
