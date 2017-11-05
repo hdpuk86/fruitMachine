@@ -14,14 +14,16 @@ import static org.junit.Assert.assertEquals;
 
 public class TestFruitMachine {
 
+    private UI ui;
     private FruitMachine fruitMachine3;
     private FruitMachine fruitMachine5;
 
 
     @Before
     public void setUp() {
-        fruitMachine3 = new FruitMachine("Top Banana", 3);
-        fruitMachine5 = new FruitMachine("Top Banana", 5);
+        ui = new UI();
+        fruitMachine3 = new FruitMachine("Top Banana", 3, ui);
+        fruitMachine5 = new FruitMachine("Top Banana", 5, ui);
     }
 
     @Test
@@ -42,7 +44,7 @@ public class TestFruitMachine {
 
     @Test
     public void canGetRandomSymbol() throws Exception {
-        FruitMachine spy = Mockito.spy(new FruitMachine("Top Banana", 3));
+        FruitMachine spy = Mockito.spy(new FruitMachine("Top Banana", 3, ui));
         Mockito.when(spy.getRandomIndex()).thenReturn(0);
         Symbol symbol = spy.getRandomSymbol();
         assertEquals(Symbol.JACKPOT, symbol);
@@ -96,7 +98,7 @@ public class TestFruitMachine {
         line.add(Symbol.PEACH);
         line.add(Symbol.PEACH);
         line.add(Symbol.PEACH);
-        FruitMachine spy = Mockito.spy(new FruitMachine("Top Banana", 3));
+        FruitMachine spy = Mockito.spy(new FruitMachine("Top Banana", 3, ui));
         Mockito.when(spy.getNewLine()).thenReturn(line);
         assertEquals(250, spy.spin());
     }
@@ -107,7 +109,7 @@ public class TestFruitMachine {
         line.add(Symbol.PEACH);
         line.add(Symbol.ORANGE);
         line.add(Symbol.AVOCADO);
-        FruitMachine spy = Mockito.spy(new FruitMachine("Top Banana", 3));
+        FruitMachine spy = Mockito.spy(new FruitMachine("Top Banana", 3, ui));
         Mockito.when(spy.getNewLine()).thenReturn(line);
         assertEquals(0, spy.spin());
     }
