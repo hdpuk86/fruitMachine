@@ -43,6 +43,10 @@ public class FruitMachine {
         this.playerFunds += amount;
     }
 
+    public void addMoneyToBank(int amount) {
+        this.bank += amount;
+    }
+
     public int getPlayerFunds() {
         return playerFunds;
     }
@@ -94,6 +98,7 @@ public class FruitMachine {
 
     public int spin() {
         this.addPlayerFunds(-1);
+        addMoneyToBank(1);
         this.line = getNewLine();
         getEmojis();
         if (isIdentical(this.line)) {
